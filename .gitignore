@@ -1,0 +1,5 @@
+*.tif
+*.tiff
+
+# python env
+venv/
