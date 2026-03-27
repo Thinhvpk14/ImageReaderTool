@@ -1,0 +1,3 @@
+https://gigadb.org/dataset/100439
+
+https://www.kaggle.com/datasets/tuanledinh/monuseg2018
