@@ -106,21 +106,27 @@ def main():
         crop_path = random.choice(crop_files)
         crop_img = Image.open(crop_path).convert("RGB").resize((size, size), Image.LANCZOS)
 
-        sample_dir = out_dir / f"sample_{sample_idx:04d}"
+        prefix = f"sample{sample_idx:03d}"
+
+        sample_dir = out_dir / prefix
         sample_dir.mkdir(parents=True, exist_ok=True)
 
-        crop_img.save(sample_dir / "image.jpg", "JPEG", quality=95)
-        mask_img.save(sample_dir / "mask.jpg", "JPEG", quality=95)
-        cond_img.save(sample_dir / "condition.jpg", "JPEG", quality=95)
+        crop_img.save(sample_dir / f"{prefix}_wsi_crop.jpg", "JPEG", quality=95)
+        mask_img.save(sample_dir / f"{prefix}_extended_mask.jpg", "JPEG", quality=95)
+        cond_img.save(sample_dir / f"{prefix}_masked_crop.jpg", "JPEG", quality=95)
 
-        print(f"  sample_{sample_idx:04d}  condition={cond_path.name}  mask={mask_path.name}  image={crop_path.name}")
+        print(f"  {prefix}  mask={mask_path.name}  cond={cond_path.name}  image={crop_path.name}")
         sample_idx += 1
 
     print(f"\nDone! {sample_idx} samples saved to {out_dir}/")
-    print(f"\nEach sample:")
-    print(f"  image.jpg     ← random crop tile ({size}×{size})")
-    print(f"  mask.jpg      ← mask PNG ({size}×{size}, grayscale)")
-    print(f"  condition.jpg ← condition PNG ({size}×{size}, RGB)")
+    print(f"\nStructure:")
+    print(f"  {out_dir}/")
+    print(f"    sample000/")
+    print(f"      sample000_wsi_crop.jpg        ← image ({size}×{size})")
+    print(f"      sample000_extended_mask.jpg    ← mask ({size}×{size}, grayscale)")
+    print(f"      sample000_masked_crop.jpg      ← condition ({size}×{size}, RGB)")
+    print(f"    sample001/")
+    print(f"      ...")
 
 
 if __name__ == "__main__":
